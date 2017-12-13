@@ -1,0 +1,103 @@
+﻿<Window x:Class="WAR.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WAR"
+        mc:Ignorable="d"
+        Title="WAR" Height="480" Width="640" Background="LightGray">
+    <Window.Resources>
+        <Style x:Key="StyledButton" TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2,2,2,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="2" BorderBrush="#FF707070" BorderThickness="1" Background="#FFDDDDDD" Opacity="1">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              TextElement.FontWeight="Normal"
+                                              RecognizesAccessKey="True">
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>                    
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StyledButtonDisableABLE" TargetType="Button" BasedOn="{StaticResource StyledButton}">
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsPlaying}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="Gray" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Button x:Name="btnNewGame" Grid.Row="0"
+                Content="_New Game" Width="75" HorizontalAlignment="Left" 
+                Style="{DynamicResource ResourceKey=StyledButton}"
+                Click="btnNewGame_Click"/>
+        <Button x:Name="btnPlay" Grid.Row="1"
+                Content="_PLAY" HorizontalAlignment="Stretch"
+                Style="{DynamicResource ResourceKey=StyledButtonDisableABLE}"
+                IsEnabled="{Binding IsPlaying, Mode=OneWay}"
+                Click="btnPlay_Click">
+        </Button>
+        <StackPanel Grid.Row="4" HorizontalAlignment="Stretch" FlowDirection="RightToLeft" Orientation="Horizontal">
+            <Button x:Name="btnExit" Grid.Row="3"
+                Content="E_xit" Width="75"
+                Style="{DynamicResource ResourceKey=StyledButton}"
+                Click="btnExit_Click"/>
+            <Button x:Name="btnRules" Grid.Row="3"
+                Content="_RULES" Width="75"
+                Style="{DynamicResource ResourceKey=StyledButton}"
+                Click="btnRules_Click"/>            
+        </StackPanel>
+        <Label x:Name="lblGameMessage" Grid.Row="3" HorizontalAlignment="Stretch" 
+               Content="{Binding GameMessage, Mode=OneWay, FallbackValue='Games Messages Here'}"/>
+        <Grid Grid.Row="2" ShowGridLines="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" FlowDirection="LeftToRight">
+                <Label x:Name="lblCardsYOULabel" Content="CARDS: " Width="Auto" />
+                <Label x:Name="lblCardsYOU" Content="{Binding CardsYOU, Mode=OneWay, FallbackValue='26'}" />
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" FlowDirection="LeftToRight">
+                <Label x:Name="lblCardsCOMPUTERLabel" Content="CARDS: " Width="Auto" />
+                <Label x:Name="lblCardsCOMPUTER" Content="{Binding CardsCOMPUTER, Mode=OneWay, FallbackValue='26'}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" FlowDirection="LeftToRight">
+                <Label x:Name="lblScoreYOULabel" Content="SCORE: " Width="Auto" />
+                <Label x:Name="lblScoreYOU" Content="{Binding ScoreYOU, Mode=OneWay, FallbackValue='0'}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" FlowDirection="LeftToRight">
+                <Label x:Name="lblScoreCOMPUTERLabel" Content="SCORE: " Width="Auto" />
+                <Label x:Name="lblScoreCOMPUTER" Content="{Binding ScoreCOMPUTER, Mode=OneWay, FallbackValue='0'}" />
+            </StackPanel>
+            <Image x:Name="ImageCardYOU" Grid.Column="0" Grid.Row="2" Width="100" Height="120" 
+                   Source="{Binding ImageCardYOU, Mode=OneWay}" />
+            <Image x:Name="ImageCardCOMPUTER" Grid.Column="1" Grid.Row="2" Width="100" Height="120"
+                   Source="{Binding ImageCardCOMPUTER, Mode=OneWay}" />
+        </Grid>
+    </Grid>
+</Window>
